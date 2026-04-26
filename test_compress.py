@@ -422,6 +422,21 @@ class TestCLI:
         assert (out / 'a.md').exists()
         assert (out / 'b.md').exists()
 
+    def test_directory_recurses_into_subdirectories(self, tmp_path):
+        (tmp_path / 'top.md').write_text('# Top\n')
+        sub = tmp_path / 'sub'
+        sub.mkdir()
+        (sub / 'nested.md').write_text('# Nested\n')
+        deep = sub / 'deep'
+        deep.mkdir()
+        (deep / 'deeper.md').write_text('# Deeper\n')
+        out = tmp_path / 'out'
+        rc = main([str(tmp_path), '--output', str(out)])
+        assert rc == 0
+        assert (out / 'top.md').exists()
+        assert (out / 'sub' / 'nested.md').exists()
+        assert (out / 'sub' / 'deep' / 'deeper.md').exists()
+
     def test_no_md_files_returns_1(self, tmp_path):
         rc = main([str(tmp_path)])
         assert rc == 1

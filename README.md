@@ -47,7 +47,7 @@ Compress in place:
 python compress.py doc.md --in-place
 ```
 
-Compress an entire folder and write results to `out/`:
+Compress an entire folder (including all subdirectories) and write results to `out/`, mirroring the original directory structure:
 
 ```bash
 python compress.py docs/ --output out/
@@ -57,6 +57,12 @@ Show token savings for every file:
 
 ```bash
 python compress.py docs/ --output out/ --verbose
+```
+
+Compress all Markdown files in place, recursively through every subdirectory:
+
+```bash
+python compress.py docs/ --in-place
 ```
 
 ## Testing
